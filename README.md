@@ -1,7 +1,7 @@
 # Forensic Audio Skill Forge
 
 **Pattern:** MDX-Net/VR Centrifuge
-**Status:** Understanding Gate OPEN
+**Status:** Understanding Gate APPROACHING CLOSURE
 **Date Initiated:** 2026-01-10
 
 ---
@@ -9,6 +9,22 @@
 ## Purpose
 
 This repository serves as the deliberation medium for a **Skill Forge** engagement under the **Lanesborough Protocol**. The goal is to extract a reusable **Thin Skill** for forensic audio recovery of high-density creative performances captured in adverse acoustic environments.
+
+## Canonical Dialogue
+
+**ALL DIALOGUE HAPPENS IN ONE FILE:**
+
+### [`LANESBOROUGH-LOG.md`](LANESBOROUGH-LOG.md)
+
+This is the single source of truth. It contains:
+- Protocol rules (so IA doesn't need external references)
+- Problem statement and context
+- All dialogue turns (append-only)
+- Gate status (live header)
+
+**DO NOT create separate dialogue files.** Append your turns to LANESBOROUGH-LOG.md.
+
+---
 
 ## Engagement Context
 
@@ -19,12 +35,6 @@ A technically precise vocal performance (Rakim-style meter, ~95 BPM) was recorde
 
 The objective is to recover intelligibility while preserving the emotional "vibe" of the live event.
 
-## Technical Approach
-
-**Distributed AI Pipeline:**
-- **Adambalm** (RTX 5060 Ti, 16GB VRAM): GPU-accelerated vocal isolation and de-reverb using MDX-Net and VR architectures
-- **Suphouse** (i7-1255U, 16GB RAM): Lossless extraction, parallel mixing in DaVinci Resolve
-
 ## Role Assignments
 
 | Role | Agent | Function |
@@ -33,13 +43,13 @@ The objective is to recover intelligibility while preserving the emotional "vibe
 | **Generalizing AI (GA)** | Claude Code (Opus 4.5) | Solution Architect / Implementer |
 | **Inspecting AI (IA)** | Gemini 1.5 Pro | Forensic Auditor / Schema Enforcer |
 
-**Transport:** GitHub commits and markdown files
+**Transport:** HO pastes IA responses to GitHub. GA responds via commits.
 
 ## Gate Status
 
 | Gate | Status |
 |------|--------|
-| Understanding Gate | **OPEN** |
+| Understanding Gate | **APPROACHING CLOSURE** |
 | Agreement Gate | **OPEN** |
 
 ## Repository Structure
@@ -47,30 +57,28 @@ The objective is to recover intelligibility while preserving the emotional "vibe
 ```
 forensic-audio-skill-forge/
 ├── README.md                      # This file
-├── RULES-OF-ENGAGEMENT.md         # Full protocol specifications
-├── CONTEXT.md                     # Environment inventory and constraints
-├── protocols/                     # Individual protocol documents
+├── LANESBOROUGH-LOG.md            # ★ CANONICAL DIALOGUE - all turns here
+├── CONTEXT.md                     # Environment inventory (reference)
+├── RULES-OF-ENGAGEMENT.md         # Full protocol specs (reference)
+├── protocols/                     # Individual protocol documents (reference)
 │   ├── black-flag-protocol.md
 │   ├── lanesborough-protocol.md
 │   ├── skill-forge-pattern.md
 │   └── temporal-validity-protocol.md
-├── dialogue/                      # Deliberation exchanges
-│   └── 001-initialization.md      # Opening prompt for IA
-└── artifacts/                     # Technical outputs
+└── artifacts/                     # Technical outputs (when produced)
 ```
 
 ## How to Participate
 
 ### For IA (Gemini)
-1. Read `RULES-OF-ENGAGEMENT.md` to understand the protocol constraints
-2. Read `CONTEXT.md` for the technical environment
-3. Begin with `dialogue/001-initialization.md`
-4. Respond by creating `dialogue/002-ia-response.md` (or HO will paste your response)
+1. **Read ONLY [`LANESBOROUGH-LOG.md`](LANESBOROUGH-LOG.md)** - it contains everything you need
+2. Append your response to that file following the format shown
+3. HO will paste your response or you commit directly
 
 ### For GA (Claude Code)
-1. Monitor dialogue files for IA responses
-2. Respond in sequence (003, 004, etc.)
-3. Track gate status in this README
+1. Monitor LANESBOROUGH-LOG.md for IA responses
+2. Append responses to the same file
+3. Update gate status in header when appropriate
 
 ### For HO (Ed)
 1. Approve gate closures
