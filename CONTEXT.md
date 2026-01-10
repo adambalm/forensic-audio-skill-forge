@@ -43,7 +43,7 @@ This engagement uses a two-node distributed architecture connected via Tailscale
 | Tailscale IP | 100.126.163.59 | [verified: Environment Inventory] |
 | Node.js | v20.18.1 | [verified: Environment Inventory] |
 | Python | 3.12.10 | [verified: Environment Inventory] |
-| FFmpeg | **UNVERIFIED** | Not in Environment Inventory |
+| FFmpeg | 8.0.1-full_build | [verified: winget install 2026-01-10] |
 
 ### Network Connectivity
 
@@ -117,7 +117,7 @@ Before proceeding with implementation, these must be resolved:
 
 1. **[BLOCKING] audio-separator installation** - Requires HO approval to install on Adambalm
 2. ~~**[RESOLVED] Source artifact location**~~ - `C:\Users\Guest1\Downloads\IMG_7118.MOV` (274 MB)
-3. **[OPTIONAL] FFmpeg on Suphouse** - Verify availability or install
+3. ~~**[RESOLVED] FFmpeg on Suphouse**~~ - Installed v8.0.1 (2026-01-10)
 
 ---
 
