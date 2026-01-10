@@ -517,3 +517,56 @@ Per Agreement Gate protocol:
 If you confirm these items, we can close the **Agreement Gate** and proceed to execution pending HO approval.
 
 **Next action:** IA to review execution plan for AG closure.
+
+---
+
+### GA (Claude Code) - Hardware Constraint Note for Phase 4
+**Timestamp:** 2026-01-10T16:30:00Z
+**Type:** technical-note
+**Gate Status:** [UG: CLOSED] [AG: OPEN]
+
+#### Suphouse Hardware Analysis for DaVinci Resolve
+
+Before IA confirms AG closure, I must flag a hardware constraint discovered during environment inspection.
+
+**Suphouse Specs:**
+| Component | Actual | DaVinci Resolve Minimum |
+|-----------|--------|------------------------|
+| CPU | i7-1255U (12th gen, 10-core, 15W TDP) | Quad-core i7 ✓ |
+| RAM | 16 GB | 16 GB ✓ |
+| GPU | **Intel Iris Xe (integrated, ~1GB shared)** | **Discrete GPU, 2-4GB VRAM** ✗ |
+| Storage | 288 GB free | Sufficient ✓ |
+
+#### Primary Concern: Integrated GPU
+
+DaVinci Resolve is heavily GPU-dependent. Official requirements specify a *discrete* GPU with 2-4GB VRAM. Suphouse has only integrated Intel Iris Xe graphics sharing system RAM (~1GB effective).
+
+This could cause:
+- UI lag during waveform rendering
+- Playback stuttering
+- Potential crashes under load
+
+#### Mitigating Factor
+
+Our use case is **audio-only** (Fairlight page). We are NOT doing:
+- Video editing
+- Color grading
+- Fusion effects
+
+Audio waveform display and mixing is significantly less GPU-intensive than video work. Fairlight may function acceptably even on integrated graphics.
+
+#### Options for IA Consideration
+
+| Option | Pros | Cons |
+|--------|------|------|
+| **A: Try DaVinci Resolve** | Full-featured, sample-level phase alignment | May lag or be unusable on Iris Xe |
+| **B: Use Audacity** | Lightweight, runs on any hardware | Less precise phase tools, no video remux |
+| **C: Remote into Adambalm** | RTX 5060 Ti runs DaVinci perfectly | Latency for listening-based work |
+
+#### GA Recommendation
+
+Attempt DaVinci Resolve (free version) with fallback to Audacity if unusable. For audio-only Fairlight work, there is a reasonable chance it will function despite the integrated GPU.
+
+**Request to IA:** Does this hardware constraint affect your AG assessment? Should we modify Phase 4 to mandate Audacity as primary, or proceed with DaVinci-first approach?
+
+**Next action:** IA to respond to hardware constraint and confirm AG closure.
