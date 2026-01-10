@@ -300,6 +300,8 @@ We have established a shared, verified technical reality. The **Understanding Ga
 
 **Next action:** Proceed to Agreement Gate (AG) debate. I am ready to review the detailed execution steps for the "Centrifuge" pattern.
 
+---
+
 ### IA (Gemini 1.5 Pro) - Forensic Artifact Verification
 **Timestamp:** 2026-01-10T15:35:00Z
 **Type:** verification-log
@@ -330,3 +332,188 @@ I have performed a direct forensic analysis of the source artifact `IMG_7118.MOV
 The source artifact supports the **Distributed Centrifuge** architecture. The "Two-Pass" approach is not overkill; it is the minimum viable technical solution for this specific acoustic environment.
 
 **Next action:** Awaiting GA's detailed Execution Plan for the Agreement Gate.
+
+---
+
+### GA (Claude Code) - Execution Plan for Agreement Gate
+**Timestamp:** 2026-01-10T16:00:00Z
+**Type:** proposal
+**Gate Status:** [UG: CLOSED] [AG: OPEN]
+
+#### Preamble
+
+With UG closed, I present the detailed execution plan for IA review. This plan incorporates all mitigations from our earlier exchange and addresses the remaining blocking items.
+
+**Acknowledgment of IA Forensic Verification:** IA's multimodal analysis of the source artifact validates:
+- Reverb tail >1.2s confirms VR De-Reverb pass is required (not optional)
+- Mic drift at 01:38 with HF drop confirms post-processing EQ mitigation
+- Crowd masking at 01:51 confirms MDX-Net is required (spectral subtraction insufficient)
+- 95 BPM internal clock confirms time-stretch artifacts would be immediately audible
+
+---
+
+#### Environment Verification (Completed via Subagents)
+
+**Adambalm (Compute Server):**
+| Component | Status |
+|-----------|--------|
+| GPU | RTX 5060 Ti, 16GB VRAM, driver 580.95, CUDA 13.0 |
+| Python | 3.12.3, venv available |
+| ~/forensic-audio | DOES NOT EXIST (will create) |
+| audio-separator | NOT INSTALLED (blocking) |
+| Disk Space | 1.6 TB free |
+
+**Suphouse (Client Workstation):**
+| Component | Status |
+|-----------|--------|
+| Source Artifact | EXISTS: 274 MB, verified |
+| FFmpeg | 8.0.1 installed (not in PATH, will use full path) |
+| SSH to Adambalm | Working |
+| DaVinci Resolve | NOT INSTALLED (will install) |
+| Disk Space | 289 GB free |
+
+---
+
+#### Phase 1: Environment Setup (Adambalm)
+
+**Requires:** HO approval for package installation
+
+```bash
+# 1.1 Create project directory
+ssh adambalm "mkdir -p ~/forensic-audio"
+
+# 1.2 Create Python virtual environment
+ssh adambalm "cd ~/forensic-audio && python3 -m venv venv"
+
+# 1.3 Install audio-separator with GPU support
+ssh adambalm "cd ~/forensic-audio && source venv/bin/activate && \
+  pip install --upgrade pip && \
+  pip install 'audio-separator[gpu]'"
+
+# 1.4 Verify GPU detection
+ssh adambalm "cd ~/forensic-audio && source venv/bin/activate && \
+  audio-separator --env_info"
+```
+
+**Models to download on first use:**
+- `Kim_Vocal_2.onnx` (vocal isolation, aggressive noise floors)
+- `UVR-MDX-NET-Voc_FT.onnx` (vocal isolation, fine-tuned)
+- `UVR-DeEcho-DeReverb.pth` (reverb removal)
+
+---
+
+#### Phase 2: Source Extraction (Suphouse)
+
+```powershell
+$ffmpeg = "C:\Users\Guest1\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin\ffmpeg.exe"
+
+# Extract 24-bit WAV
+& $ffmpeg -i "C:\Users\Guest1\Downloads\IMG_7118.MOV" -vn -acodec pcm_s24le -ar 44100 "C:\Users\Guest1\Downloads\source.wav"
+
+# Transfer to Adambalm
+scp "C:\Users\Guest1\Downloads\source.wav" adambalm:~/forensic-audio/
+```
+
+---
+
+#### Phase 3: Centrifuge Inference (Adambalm)
+
+**3.1 Canary Test (A/B model comparison):**
+```bash
+# Extract 10s segment around E-D-M-O-N-D sync point (01:39)
+ssh adambalm "cd ~/forensic-audio && source venv/bin/activate && \
+  ffmpeg -i source.wav -ss 94 -t 10 canary.wav && \
+  mkdir -p canary_kim canary_mdx && \
+  audio-separator canary.wav -m Kim_Vocal_2.onnx -o canary_kim && \
+  audio-separator canary.wav -m UVR-MDX-NET-Voc_FT.onnx -o canary_mdx"
+```
+
+**[DECISION POINT]** HO/IA review canary outputs for:
+- Consonant sharpness (S, T, K sounds)
+- Artifact ceiling (no "chirping")
+
+**3.2 Full Processing (after model selection):**
+```bash
+# Pass 1: Vocal isolation
+ssh adambalm "cd ~/forensic-audio && source venv/bin/activate && \
+  mkdir -p pass1 && \
+  audio-separator source.wav -m [SELECTED_MODEL] -o pass1 --overlap 0.5"
+
+# Pass 2: De-echo/De-reverb
+ssh adambalm "cd ~/forensic-audio && source venv/bin/activate && \
+  mkdir -p pass2 && \
+  audio-separator pass1/*Vocals*.wav -m UVR-DeEcho-DeReverb.pth -o pass2"
+```
+
+**3.3 Transfer Results:**
+```powershell
+scp adambalm:~/forensic-audio/pass2/*No_Reverb*.wav "C:\Users\Guest1\Downloads\forensic_dry.wav"
+```
+
+---
+
+#### Phase 4: Assembly (Suphouse) - LISTENING-BASED
+
+**CRITICAL:** Final mix is a listening-based process, not a batch script. This is required for forensic quality.
+
+**4.0 Install DaVinci Resolve:**
+```powershell
+winget install --id BlackmagicDesign.DaVinciResolve
+# Fallback: winget install --id Audacity.Audacity
+```
+
+**4.1 Manual Assembly Workflow (DaVinci Resolve Fairlight):**
+
+1. Create project → Import `source.wav` and `forensic_dry.wav`
+2. Timeline:
+   - Track 1: Original audio (crowd "vibe")
+   - Track 2: Forensic dry vocal (lyrical "clarity")
+3. **Phase alignment at 01:39** (E-D-M-O-N-D sync point):
+   - Zoom to sample level
+   - Align waveform peaks
+   - Verify at 3+ points (intro, 01:39, outro)
+4. Volume balance: Start at -10dB/0dB (original/forensic), adjust by ear
+5. EQ if needed: High-shelf +3-4dB @ 6kHz for mic-drift sections (per IA verification @ 01:38)
+6. Export: WAV 24-bit 44.1kHz
+
+**4.2 Final Remux:**
+```powershell
+& $ffmpeg -i "C:\Users\Guest1\Downloads\IMG_7118.MOV" -i "C:\Users\Guest1\Downloads\final_mix.wav" -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k "C:\Users\Guest1\Downloads\IMG_7118_forensic.mp4"
+```
+
+---
+
+#### Blocking Items Status
+
+| Item | Status | Resolution |
+|------|--------|------------|
+| audio-separator installation | **BLOCKING** | Awaiting HO approval |
+| DaVinci Resolve installation | **ACTION** | Will install via winget |
+| FFmpeg in PATH | **MITIGATED** | Using full path |
+
+---
+
+#### Request to HO
+
+**I request approval to proceed with Phase 1** (audio-separator installation on Adambalm).
+
+This will install:
+- `audio-separator[gpu]` package (~50MB)
+- ONNX Runtime GPU dependencies
+- UVR models on first use (~200MB total)
+
+All installations are contained in `~/forensic-audio/venv/` virtual environment.
+
+---
+
+#### Request to IA
+
+Per Agreement Gate protocol:
+
+1. Does this execution plan adequately address the failure modes you raised?
+2. Are the decision points (canary test, model selection) sufficient for quality control?
+3. Do you approve the listening-based assembly approach for Phase 4?
+
+If you confirm these items, we can close the **Agreement Gate** and proceed to execution pending HO approval.
+
+**Next action:** IA to review execution plan for AG closure.
