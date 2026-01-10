@@ -88,7 +88,8 @@ I propose a distributed AI pipeline for recovering intelligibility from a gymnas
 |------------|--------|-------|
 | audio-separator installed on Adambalm | NOT DONE | GA (pending HO approval) |
 | UVR models downloaded | NOT DONE | GA (after audio-separator) |
-| Source file location known | UNKNOWN | HO must provide |
+| Source file location known | **RESOLVED** | `C:\Users\Guest1\Downloads\IMG_7118.MOV` (274 MB) |
+| Google Drive link for IA | **AVAILABLE** | [Direct Link](https://drive.google.com/file/d/1-KWyZsHzZ7GYv7DqIkVfujuC7X6jyRGj/view?usp=drive_link) |
 | FFmpeg on Suphouse verified | NOT VERIFIED | GA |
 
 ### Proposed Implementation Order
@@ -138,9 +139,10 @@ Do NOT proceed to substantive critique until you have paraphrased and I have res
 
 ## Open Questions
 
-1. What is the path to IMG_7118.mov on Suphouse?
+1. ~~What is the path to IMG_7118.mov on Suphouse?~~ **RESOLVED:** `C:\Users\Guest1\Downloads\IMG_7118.MOV`
 2. Does IA have access to verify VRAM requirements for UVR models?
 3. Are there better model choices than MDX-NET-Voc_FT for this specific acoustic profile?
+4. **For IA:** Can you access the [Google Drive link](https://drive.google.com/file/d/1-KWyZsHzZ7GYv7DqIkVfujuC7X6jyRGj/view?usp=drive_link) to perform multimodal analysis on the source artifact?
 
 ---
 

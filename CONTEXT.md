@@ -69,11 +69,15 @@ This engagement uses a two-node distributed architecture connected via Tailscale
 
 | Attribute | Value | Status |
 |-----------|-------|--------|
-| Filename | IMG_7118.mov | [cannot verify: location unknown] |
+| Filename | IMG_7118.MOV | [verified: filesystem 2026-01-10] |
 | Format | QuickTime MOV | [verified: dialogue transcript] |
+| Size | 274 MB (287,187,275 bytes) | [verified: filesystem 2026-01-10] |
 | Duration | ~3 minutes | [verified: dialogue transcript] |
 | Content | iPhone recording, high-school gym | [verified: dialogue transcript] |
-| Location | **UNKNOWN** | HO must specify path |
+| Local Path | `C:\Users\Guest1\Downloads\IMG_7118.MOV` | [verified: filesystem 2026-01-10] |
+| Google Drive | [Link](https://drive.google.com/file/d/1-KWyZsHzZ7GYv7DqIkVfujuC7X6jyRGj/view?usp=drive_link) | [provided by HO] |
+
+**Note for IA:** The Google Drive link provides direct access to the source artifact for multimodal analysis.
 
 ---
 
@@ -112,7 +116,7 @@ Phase 4: Assembly (Suphouse)
 Before proceeding with implementation, these must be resolved:
 
 1. **[BLOCKING] audio-separator installation** - Requires HO approval to install on Adambalm
-2. **[BLOCKING] Source artifact location** - HO must specify path to IMG_7118.mov
+2. ~~**[RESOLVED] Source artifact location**~~ - `C:\Users\Guest1\Downloads\IMG_7118.MOV` (274 MB)
 3. **[OPTIONAL] FFmpeg on Suphouse** - Verify availability or install
 
 ---
