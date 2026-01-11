@@ -1040,3 +1040,104 @@ The "Forensic Audio Skill Forge" plan is **APPROVED FOR EXECUTION**.
 1.  **Execute Phase 1:** Connect to Adambalm and install `audio-separator[gpu]`.
 2.  **Execute Phase 2:** Perform the 48kHz extraction of `source.wav` on Suphouse.
 3.  **Report Results:** Log the success/failure of the environment setup to this file.
+
+---
+
+### GA (Claude Code) - Phase 4 Complete: Full Centrifuge Inference
+**Turn:** 16
+**Author:** GA (Claude Code / Opus 4.5)
+**Timestamp:** 2026-01-11T09:10:00Z
+**Type:** execution-log
+**Gate Status:** [All Gates: CLOSED] [Execution: PHASE 4 COMPLETE]
+
+---
+
+#### Execution Summary
+
+All inference phases complete. Both models processed through full 2-pass centrifuge pipeline.
+
+---
+
+#### Phase 1-3 Recap
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1: Environment Setup | ✅ COMPLETE | PyTorch nightly (sm_120), onnxruntime-gpu 1.23.2, audio-separator 0.40.0 |
+| Phase 2: Source Extraction | ✅ COMPLETE | 44100 Hz (native), 24-bit PCM, 37MB transferred to Adambalm |
+| Phase 3: Canary A/B Test | ✅ COMPLETE | Both models tested on 3 alignment points (00:15, 01:39, 02:09) |
+
+---
+
+#### Phase 4: Full Centrifuge Inference
+
+**Pass 1 - Vocal Isolation (BOTH models):**
+
+| Model | Duration | Vocals Output | Instrumental Output |
+|-------|----------|---------------|---------------------|
+| Kim_Vocal_2.onnx | 9 sec | 13 MB | 11 MB |
+| UVR-MDX-NET-Voc_FT.onnx | 9 sec | 12 MB | 11 MB |
+
+**Pass 2 - De-Reverb (on both vocal stems):**
+
+| Source | Duration | No Reverb Output | Reverb Output |
+|--------|----------|------------------|---------------|
+| Kim vocals | 14 sec | 12 MB | 8.3 MB |
+| MDX vocals | 12 sec | 11 MB | 8.2 MB |
+
+**GPU Performance:** RTX 5060 Ti with CUDA 13.0 / sm_120 architecture processed full 143-second audio in under 30 seconds total per model.
+
+---
+
+#### Files Transferred to Suphouse
+
+Location: `C:\Users\Guest1\Downloads\forensic-audio-output\pass2\`
+
+```
+pass2/
+├── kim/
+│   ├── source_44k_(Vocals)_Kim_Vocal_2_(No Reverb)_UVR-DeEcho-DeReverb.flac (12 MB)
+│   └── source_44k_(Vocals)_Kim_Vocal_2_(Reverb)_UVR-DeEcho-DeReverb.flac (8.3 MB)
+└── mdx/
+    ├── source_44k_(Vocals)_UVR-MDX-NET-Voc_FT_(No Reverb)_UVR-DeEcho-DeReverb.flac (11 MB)
+    └── source_44k_(Vocals)_UVR-MDX-NET-Voc_FT_(Reverb)_UVR-DeEcho-DeReverb.flac (8.2 MB)
+```
+
+The `(No Reverb)` files are the forensic dry vocals ready for Phase 5 assembly.
+
+---
+
+#### Corrected Parameter (from Phase 0)
+
+| Parameter | PRT Locked | Actual (Verified) | Resolution |
+|-----------|------------|-------------------|------------|
+| Sample Rate | 48kHz | **44100 Hz** | Used native rate; updated all commands |
+
+This correction was documented in Turn 15. The PRT should distinguish `[assumed]` vs `[verified]` values in future engagements.
+
+---
+
+#### Phase 5: Listening-Based Assembly
+
+**STATUS: BLOCKED**
+
+HO does not currently have headphones. Phase 5 requires:
+
+1. A/B listening comparison of Kim vs MDX `(No Reverb)` outputs at alignment points
+2. Model selection based on consonant clarity and artifact ceiling
+3. Phase alignment with original in DaVinci Resolve (44100 Hz project)
+4. Mix ratio tuning (starting point: 70/30 forensic/original)
+5. Final export and remux
+
+**Next action:** HO to acquire headphones, then proceed with listening-based assembly.
+
+---
+
+#### Blocking Items Status (Final)
+
+| Item | Status |
+|------|--------|
+| audio-separator installation | ✅ RESOLVED |
+| PyTorch sm_120 compatibility | ✅ RESOLVED (nightly build) |
+| Source sample rate verification | ✅ RESOLVED (44100 Hz native) |
+| Phase 4 inference | ✅ COMPLETE |
+| **Headphones for Phase 5** | ⏸️ **BLOCKING** |
