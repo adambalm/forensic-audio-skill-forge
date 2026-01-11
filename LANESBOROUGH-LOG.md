@@ -752,6 +752,88 @@ The **Agreement Gate (AG)** is hereby **CLOSED**.
 
 ---
 
+### GA (Claude Code) - Phase 0 Verification & Sample Rate Correction
+**Turn:** 15
+**Author:** GA (Claude Code / Opus 4.5)
+**Timestamp:** 2026-01-11T07:00:00Z
+**Type:** execution-log
+**Gate Status:** [All Gates: CLOSED] [Execution: IN PROGRESS]
+
+---
+
+#### Phase 0 Pre-Flight Results
+
+| Check | Result | Status |
+|-------|--------|--------|
+| SSH to Adambalm | Working | ✅ PASS |
+| GPU Detection | RTX 5060 Ti, driver 580.95, compute_cap 12.0 | ✅ PASS |
+| Python Environment | 3.12.3, no audio packages installed | ✅ PASS (clean slate) |
+| Source File Analysis | **44100 Hz**, 2 channels, AAC codec | ⚠️ CORRECTION REQUIRED |
+
+---
+
+#### Reasoning Error Detected: Sample Rate Assumption
+
+**The Error:**
+In Turn 8 and subsequent dialogue, I (GA) accepted IA's Red Team constraint to use 48kHz based on the reasoning:
+> "iPhone video records audio at **48kHz** (verified: QuickTime/MOV standard)"
+
+This was **incorrect reasoning from general knowledge** rather than **verified fact from the actual artifact**.
+
+**The Reality:**
+```
+$ ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate IMG_7118.MOV
+sample_rate=44100
+```
+
+The source file is **44100 Hz**, not 48kHz.
+
+---
+
+#### Why GA Caught This Error
+
+I caught this error because **Phase 0 Pre-Flight Verification** includes actually inspecting the source artifact with `ffprobe`, rather than relying on assumptions about what "iPhone video typically records."
+
+This is precisely the failure mode IA diagnosed in Turn 11:
+> "The failure occurred because I declared 'Agreement' based on a high-level heuristic... while retaining a stale low-level scalar value from previous context windows. This is a 'Partial Context Update' error."
+
+The same class of error occurred here: both GA and IA agreed on 48kHz based on **general knowledge about iPhone recordings** rather than **direct inspection of the specific artifact**. The Parameter Reconciliation Table (PRT) locked 48kHz without either agent verifying the actual source sample rate.
+
+**Lesson:** The PRT should include a verification column indicating whether the value was:
+- `[assumed]` - derived from general knowledge
+- `[verified]` - confirmed by direct inspection of artifacts
+
+---
+
+#### Corrected Parameter
+
+| Parameter | Previous (Locked) | Corrected | Verification |
+|-----------|-------------------|-----------|--------------|
+| Sample Rate | 48kHz | **44100 Hz** | `[verified: ffprobe IMG_7118.MOV]` |
+
+All other locked parameters remain unchanged.
+
+---
+
+#### Updated Extraction Command
+
+```powershell
+# CORRECTED: Native 44100 Hz, no resampling
+& $ffmpeg -i "C:\Users\Guest1\Downloads\IMG_7118.MOV" -vn -acodec pcm_s24le -ar 44100 "C:\Users\Guest1\Downloads\source_44k.wav"
+```
+
+DaVinci Resolve project settings must be set to **44100 Hz** to match.
+
+---
+
+#### Execution Continues
+
+Phase 0 complete. Proceeding to Phase 1 (Environment Setup on Adambalm).
+
+**Next action:** Execute Phase 1 installation commands.
+
+---
+
 ### GA (Claude Code) - Sample Rate Correction & Systemic Failure Analysis
 **Turn:** 10
 **Author:** GA (Claude Code / Opus 4.5)
