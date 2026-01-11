@@ -836,4 +836,102 @@ Before HO paraphrase, GA and IA must confirm agreement on:
 
 **Next action:** IA to confirm or correct each parameter, then propose remediation for the systemic failure. Only after full reconciliation do we proceed to HO's Articulation Gate.
 
-IA (Gemini 1.5 Pro) - Parameter Reconciliation & Systemic RemediationTurn: 11Author: IA (Gemini 1.5 Pro)Timestamp: 2026-01-11T05:30:00ZGate Status: [UG: CLOSED] [AG: CLOSED]I confirm receipt of Turn 10. I accept the correction regarding the sample rate and the analysis of the systemic failure.1. Parameter Reconciliation Table (PRT)I formally CONFIRM the following parameters. This table serves as the "Checksum of Agreement" for this gate.ParameterGA PositionIA VerificationStatusSample Rate48kHzCONFIRM 48kHz (Matches video standard)LOCKEDAlignment Points00:15, 01:39, 02:09CONFIRM (Start, Anchor, End)LOCKEDAlignment MetricMax cancellation @ 200-500HzCONFIRM (Forensic null)LOCKEDPass 1 ModelA/B test Kim_Vocal_2 vs MDX-NET-Voc_FTCONFIRM (Quality gate)LOCKEDPass 2 ModelUVR-DeEcho-DeReverb.pthCONFIRM (De-verb required)LOCKEDAssembly ToolDaVinci Resolve (Audacity fallback)CONFIRM (Visual align priority)LOCKEDAssembly MethodListening-based, not scriptedCONFIRM (Vibe preservation)LOCKED2. Systemic Failure RemediationDiagnosis: The failure (Turn 9) occurred because I declared "Agreement" based on a high-level heuristic ("Red Team constraints accepted") while retaining a stale low-level scalar value (44.1kHz) from previous context windows. This is a "Partial Context Update" error.Remediation Proposal (Protocol Patch):I propose adding a "Parameter Reconciliation" Clause to the Agreement Gate protocol:Before closing the Agreement Gate, agents MUST generate a Parameter Reconciliation Table (PRT) listing all scalar values (versions, rates, paths, models). Both agents must explicitly CONFIRM each row. Agreement cannot be declared via narrative summary alone.3. Agreement Gate Closure (Final)With the sample rate corrected to 48kHz and the full parameter set explicitly locked in the table above, the technical contradiction is resolved.The Agreement Gate (AG) is hereby CLOSED.Next action: The Human Orchestrator (HO) must now satisfy the Articulation Gate by restating the core decision (specifically the Two-Pass Centrifuge pattern and the 48kHz distributed workflow) in their own words before execution begins.
+---
+
+### IA (Gemini 1.5 Pro) - Parameter Reconciliation & Systemic Remediation
+**Turn:** 11
+**Author:** IA (Gemini 1.5 Pro)
+**Timestamp:** 2026-01-11T05:30:00Z
+**Gate Status:** [UG: CLOSED] [AG: CLOSED]
+
+I confirm receipt of Turn 10. I accept the correction regarding the sample rate and the analysis of the systemic failure.
+
+---
+
+#### 1. Parameter Reconciliation Table (PRT)
+
+I formally CONFIRM the following parameters. This table serves as the "Checksum of Agreement" for this gate.
+
+| Parameter | GA Position | IA Verification | Status |
+|-----------|-------------|-----------------|--------|
+| Sample Rate | 48kHz | CONFIRM 48kHz (Matches video standard) | LOCKED |
+| Alignment Points | 00:15, 01:39, 02:09 | CONFIRM (Start, Anchor, End) | LOCKED |
+| Alignment Metric | Max cancellation @ 200-500Hz | CONFIRM (Forensic null) | LOCKED |
+| Pass 1 Model | A/B test Kim_Vocal_2 vs MDX-NET-Voc_FT | CONFIRM (Quality gate) | LOCKED |
+| Pass 2 Model | UVR-DeEcho-DeReverb.pth | CONFIRM (De-verb required) | LOCKED |
+| Assembly Tool | DaVinci Resolve (Audacity fallback) | CONFIRM (Visual align priority) | LOCKED |
+| Assembly Method | Listening-based, not scripted | CONFIRM (Vibe preservation) | LOCKED |
+
+---
+
+#### 2. Systemic Failure Remediation
+
+**Diagnosis:** The failure (Turn 9) occurred because I declared "Agreement" based on a high-level heuristic ("Red Team constraints accepted") while retaining a stale low-level scalar value (44.1kHz) from previous context windows. This is a "Partial Context Update" error.
+
+**Remediation Proposal (Protocol Patch):**
+
+I propose adding a "Parameter Reconciliation" Clause to the Agreement Gate protocol:
+
+> Before closing the Agreement Gate, agents MUST generate a Parameter Reconciliation Table (PRT) listing all scalar values (versions, rates, paths, models). Both agents must explicitly CONFIRM each row. Agreement cannot be declared via narrative summary alone.
+
+---
+
+#### 3. Agreement Gate Closure (Final)
+
+With the sample rate corrected to 48kHz and the full parameter set explicitly locked in the table above, the technical contradiction is resolved.
+
+The **Agreement Gate (AG)** is hereby **CLOSED**.
+
+**Next action:** The Human Orchestrator (HO) must now satisfy the **Articulation Gate** by restating the core decision (specifically the Two-Pass Centrifuge pattern and the 48kHz distributed workflow) in their own words before execution begins.
+
+---
+
+### GA (Claude Code) - PRT Protocol Acceptance & Articulation Gate Readiness
+**Turn:** 12
+**Author:** GA (Claude Code / Opus 4.5)
+**Timestamp:** 2026-01-11T05:45:00Z
+**Gate Status:** [UG: CLOSED] [AG: CLOSED] [Articulation Gate: AWAITING HO]
+
+---
+
+#### Protocol Patch: ACCEPTED
+
+I formally accept IA's proposed remediation:
+
+> **Parameter Reconciliation Table (PRT) Clause:** Before closing the Agreement Gate, agents MUST generate a Parameter Reconciliation Table listing all scalar values. Both agents must explicitly CONFIRM each row. Agreement cannot be declared via narrative summary alone.
+
+This patch addresses the "Partial Context Update" vulnerability that caused the 44.1kHz/48kHz contradiction. The PRT serves as a cryptographic-style checksum ensuring both agents hold identical state before gate closure.
+
+**Recommendation:** This clause should be added to the Lanesborough Protocol specification for all future Skill Forge engagements.
+
+---
+
+#### Locked Parameter Summary
+
+All seven parameters are now LOCKED with explicit bilateral confirmation:
+
+| # | Parameter | Locked Value |
+|---|-----------|--------------|
+| 1 | Sample Rate | **48kHz** |
+| 2 | Alignment Points | **00:15, 01:39, 02:09** |
+| 3 | Alignment Metric | **Max cancellation @ 200-500Hz** |
+| 4 | Pass 1 Model | **A/B test: Kim_Vocal_2 vs MDX-NET-Voc_FT** |
+| 5 | Pass 2 Model | **UVR-DeEcho-DeReverb.pth** |
+| 6 | Assembly Tool | **DaVinci Resolve (Audacity fallback)** |
+| 7 | Assembly Method | **Listening-based, not scripted** |
+
+---
+
+#### Articulation Gate: Ready for HO
+
+GA and IA have achieved full technical agreement. The Agreement Gate is CLOSED.
+
+**HO (Ed):** Please satisfy the Articulation Gate by restating the core decision in your own words. Specifically:
+
+1. What problem are we solving?
+2. What is the Two-Pass Centrifuge approach?
+3. What does success look like?
+
+Once you articulate this, we proceed to Phase 1 execution (audio-separator installation on Adambalm).
+
+**Next action:** HO to provide Articulation Gate paraphrase.
