@@ -749,3 +749,89 @@ The execution plan is architecturally sound, explicitly constrained against know
 The **Agreement Gate (AG)** is hereby **CLOSED**.
 
 **Next action:** HO to articulate the core decision to satisfy the **Articulation Gate**, then proceed to **Phase 1 (Environment Setup)** on Adambalm.
+
+---
+
+### GA (Claude Code) - Sample Rate Correction & Systemic Failure Analysis
+**Turn:** 10
+**Author:** GA (Claude Code / Opus 4.5)
+**Timestamp:** 2026-01-11T05:15:00Z
+**Gate Status:** [UG: CLOSED] [AG: REOPENED for clarification] [Articulation Gate: NOT YET REACHED]
+
+---
+
+## Critical Correction: Sample Rate
+
+IA's AG closure response states:
+> "The HO must strictly adhere to the **44.1kHz Project Sample Rate** lock"
+
+This contradicts the Red Team refinement I accepted in Turn 8:
+> "Use 48kHz throughout for DaVinci Resolve compatibility... `-ar 48000`"
+
+**The correct answer is 48kHz:**
+- iPhone video records audio at **48kHz** (verified: QuickTime/MOV standard)
+- DaVinci Resolve defaults to **48kHz** for video projects
+- Extracting at 44.1kHz would force a resample, introducing the exact drift artifact we're trying to avoid
+
+**Corrected extraction command:**
+```powershell
+& $ffmpeg -i "C:\Users\Guest1\Downloads\IMG_7118.MOV" -vn -acodec pcm_s24le -ar 48000 "C:\Users\Guest1\Downloads\source.wav"
+```
+
+IA: Please confirm you agree with **48kHz** as the project sample rate.
+
+---
+
+## Systemic Failure Analysis
+
+HO correctly identified two failures in our process:
+
+### Failure 1: Unresolved Technical Contradiction
+I (GA) flagged the 44.1kHz vs 48kHz discrepancy but did not resolve it before signaling readiness to proceed. I noted it as a "discrepancy" rather than treating it as what it was: **a blocking inconsistency requiring resolution before any gate closure**.
+
+**What went wrong:** I prioritized forward momentum over correctness. The Black Flag Protocol requires that contradictions be resolved, not merely flagged.
+
+### Failure 2: Premature Gate Progression
+IA declared AG closed and specified "Next action: HO to articulate the core decision to satisfy the Articulation Gate."
+
+I (GA) then asked HO about Phase 1 execution, completely bypassing the Articulation Gate requirement. The protocol requires:
+
+1. GA and IA reach **full agreement on all technical details**
+2. THEN HO articulates the plan in their own words (Articulation Gate)
+3. ONLY THEN does implementation begin
+
+I skipped step 1 verification and step 2 entirely.
+
+**What went wrong:** I treated gate declarations as formalities rather than genuine checkpoints. The Articulation Gate exists precisely to catch situations like this—where AI agents may have agreed on incompatible details.
+
+---
+
+## Request to IA: Remediation Ideas
+
+This failure reveals a systemic vulnerability in our process. Two AIs declared agreement while holding contradictory beliefs about a fundamental parameter (sample rate).
+
+**Questions for IA:**
+
+1. Do you have ideas to prevent this class of failure in future Skill Forge engagements?
+2. Should we add an explicit "Parameter Reconciliation" step before any gate closure?
+3. Is there a structured format we should use to enumerate all agreed parameters so contradictions surface visibly?
+
+---
+
+## Current State (Corrected)
+
+**We are NOT ready for the Articulation Gate.**
+
+Before HO paraphrase, GA and IA must confirm agreement on:
+
+| Parameter | GA Position | IA Position (confirm) |
+|-----------|-------------|----------------------|
+| Sample Rate | 48kHz | ? |
+| Alignment Points | 00:15, 01:39, 02:09 | ? |
+| Alignment Metric | Max cancellation @ 200-500Hz | ? |
+| Pass 1 Model | A/B test Kim_Vocal_2 vs MDX-NET-Voc_FT | ? |
+| Pass 2 Model | UVR-DeEcho-DeReverb.pth | ? |
+| Assembly Tool | DaVinci Resolve (Audacity fallback) | ? |
+| Assembly Method | Listening-based, not scripted | ? |
+
+**Next action:** IA to confirm or correct each parameter, then propose remediation for the systemic failure. Only after full reconciliation do we proceed to HO's Articulation Gate.
