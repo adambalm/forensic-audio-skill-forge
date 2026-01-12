@@ -1141,3 +1141,97 @@ HO does not currently have headphones. Phase 5 requires:
 | Source sample rate verification | ✅ RESOLVED (44100 Hz native) |
 | Phase 4 inference | ✅ COMPLETE |
 | **Headphones for Phase 5** | ⏸️ **BLOCKING** |
+
+---
+
+### GA (Claude Code) - Phase 5 Alternate: FFmpeg Batch Mix Experimentation
+**Turn:** 17
+**Author:** GA (Claude Code / Opus 4.5)
+**Timestamp:** 2026-01-11T15:30:00Z
+**Type:** execution-log
+**Gate Status:** [All Gates: CLOSED] [Execution: PHASE 5 ALTERNATE COMPLETE]
+
+---
+
+#### Strategy Pivot
+
+HO elected to bypass DaVinci Resolve installation and headphone-dependent listening tests. Instead, executed batch FFmpeg mixing with multiple parameter sets for later A/B comparison.
+
+**Rationale:** Generate a variety of mixes with different vocal/crowd balance strategies. HO can compare results when headphones become available, or share with others for feedback.
+
+---
+
+#### Model Selection
+
+Selected **Kim_Vocal_2** over UVR-MDX-NET-Voc_FT for all mixes (HO decision).
+
+Source stem: `source_44k_(Vocals)_Kim_Vocal_2_(No Reverb)_UVR-DeEcho-DeReverb.flac`
+
+---
+
+#### Mix Variants Generated
+
+All outputs encoded to **H.264 + AAC 256k** for universal social media compatibility (Instagram, Facebook, etc.).
+
+| # | Filename | Vocal Treatment | Backing Treatment | Technique |
+|---|----------|-----------------|-------------------|-----------|
+| 1 | `Final_Mix_Safe.mp4` | 120% volume | 15% volume | Static mix (HEVC - not social-ready) |
+| 2 | `Final_Mix_Pro_Universal.mp4` | 120% + echo (0.8:0.9:1000:0.3) | 15% + 200Hz highpass | Spatial depth |
+| 3 | `Final_Mix_Punchy.mp4` | 140% + 9:1 compressor | 20% + 200Hz highpass | Aggressive presence |
+| 4 | `Final_Mix_Smart_Ducking.mp4` | 9:1 compressor | Sidechain 20:1, 300ms release | Broadcast-style ducking |
+| 5 | `Final_Mix_Transparent.mp4` | 9:1 compressor | Split: ducked+EQ @ 50% + full @ 15% | Frequency carving + blend |
+| 6 | `Final_Mix_Gentle_Duck.mp4` | 9:1 compressor | Sidechain 2:1, 300ms release | Subtle natural ducking |
+| 7 | `Final_Mix_Max_Loudness.mp4` | 300% + 20:1 comp + 3kHz +4dB | Sidechain 2:1, 300ms release | Maximum vocal presence |
+
+---
+
+#### Technical Notes
+
+**Common filter chain elements:**
+- `alimiter=limit=0.95` on all outputs (clipping protection)
+- `acompressor=threshold=0.125:ratio=9:attack=2:release=50` (vocal compression baseline)
+- `sidechaincompress` for ducking variants (crowd responds to vocal presence)
+
+**FFmpeg version:** 8.0.1-full_build (Gyan.dev)
+
+**Video encoding:** `libx264 -pix_fmt yuv420p` ensures playback on all devices/platforms.
+
+---
+
+#### File Locations
+
+All outputs in: `C:\Users\Guest1\Downloads\`
+
+```
+Final_Mix_Safe.mp4              275 MB (HEVC - original codec)
+Final_Mix_Pro_Universal.mp4      89 MB (H.264)
+Final_Mix_Punchy.mp4             89 MB (H.264)
+Final_Mix_Smart_Ducking.mp4      89 MB (H.264)
+Final_Mix_Transparent.mp4        89 MB (H.264)
+Final_Mix_Gentle_Duck.mp4        89 MB (H.264)
+Final_Mix_Max_Loudness.mp4       89 MB (H.264)
+```
+
+---
+
+#### Recommended Listening Order
+
+For A/B comparison when headphones available:
+
+1. **Final_Mix_Gentle_Duck.mp4** - Most natural, crowd preserved
+2. **Final_Mix_Smart_Ducking.mp4** - Clear vocals, crowd dips noticeably
+3. **Final_Mix_Max_Loudness.mp4** - Maximum intelligibility, broadcast loud
+
+---
+
+#### Phase 5 Status Update
+
+| Item | Status |
+|------|--------|
+| DaVinci Resolve installation | ⏭️ SKIPPED |
+| Manual phase alignment | ⏭️ SKIPPED (FFmpeg handles sync) |
+| Listening-based mix tuning | ⏭️ DEFERRED (batch approach) |
+| **7 mix variants generated** | ✅ COMPLETE |
+| **Social media ready (H.264)** | ✅ COMPLETE |
+
+**Next action:** HO to review mixes, select preferred version, and publish.
