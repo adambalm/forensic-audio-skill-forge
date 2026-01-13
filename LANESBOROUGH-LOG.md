@@ -1289,9 +1289,9 @@ highpass=f=200 → sidechaincompress(3:1, 300ms release)
 
 ---
 
-#### Skill Forge Engagement: COMPLETE
+#### Skill Forge Engagement: AUDIO COMPLETE
 
-The Forensic Audio Skill Forge has successfully:
+The Forensic Audio Skill Forge audio processing has successfully:
 
 1. ✅ Closed all protocol gates (UG, AG, Articulation)
 2. ✅ Executed distributed GPU inference pipeline (Adambalm RTX 5060 Ti)
@@ -1299,4 +1299,54 @@ The Forensic Audio Skill Forge has successfully:
 4. ✅ Generated 8 mix variants for A/B comparison
 5. ✅ Produced final H.264 deliverable for social media
 
-**Next action:** HO to publish and gather feedback.
+**Next action:** Skill extraction (Turn 19).
+
+---
+
+### Turn 19: Skill Extraction (GA)
+
+**Action:** Post-mortem skill extraction from engagement
+
+#### Scope Decision
+
+HO directed skill extraction to focus on:
+- **Category A:** Broad Skills (high cross-domain value)
+- **Category C:** Domain Skills (audio/GPU specialists)
+
+Excluded: Lanesborough Protocol-specific improvements (A1, A2, A4, A5), model selection documentation (B2), standard practices (D2, D3).
+
+#### Skills Extracted to basic-memory
+
+| Skill | Permalink | Tier |
+|-------|-----------|------|
+| **FFmpeg Sidechain Ducking** | `skills/ffmpeg-sidechain-ducking` | Tier 1 (Broad) |
+| **Phase 0 Pre-Flight** | `skills/phase-0-pre-flight-verify-dont-assume` | Tier 1 (Broad) |
+| **H.264 Social Media Encoding** | `skills/h.264-social-media-encoding` | Tier 1 (Broad) |
+| **Two-Pass Centrifuge Pipeline** | `skills/two-pass-centrifuge-pipeline` | Tier 2 (Domain) |
+| **Blackwell GPU Setup** | `skills/blackwell-gpu-setup` | Tier 2 (Domain) |
+
+#### Amortization Analysis
+
+**Tier 1 (Broad):** High reuse across any Claude Code engagement
+- FFmpeg Sidechain Ducking: Podcast, voiceover, broadcast mixing
+- Phase 0 Pre-Flight: Prevents "agreed but wrong" parameter failures
+- H.264 Encoding: Universal video export
+
+**Tier 2 (Domain):** Specialists that save hours when relevant
+- Two-Pass Centrifuge: Any reverberant recording recovery
+- Blackwell GPU Setup: Any RTX 50 series user hitting CUDA errors
+
+#### Key Learnings Preserved
+
+1. **"Verify Don't Assume"** - Both AIs agreed on 48kHz; file was actually 44.1kHz
+2. **`asplit` not `split`** - FFmpeg filter error for audio streams
+3. **All outputs must connect** - Unconnected filter outputs cause graph failures
+4. **PyTorch nightly for sm_120** - Stable builds don't include Blackwell kernels
+
+---
+
+#### Skill Forge Engagement: SKILL-EXTRACTION-COMPLETE
+
+**Final Status:** All deliverables produced, all extractable skills archived.
+
+**Next action:** HO to publish audio and utilize skills in future engagements.
